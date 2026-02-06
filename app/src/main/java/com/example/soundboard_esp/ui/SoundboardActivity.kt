@@ -6,13 +6,14 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.media.SoundPool
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.soundboard_esp.R
@@ -21,35 +22,30 @@ import com.example.soundboard_esp.ui.viewmodel.SoundboardViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-/**
- * Activity principale du Soundboard
- */
 class SoundboardActivity : AppCompatActivity() {
     
     private lateinit var viewModel: SoundboardViewModel
     private lateinit var soundPool: SoundPool
-    private val soundMap = HashMap<Int, Int>() // buttonPosition -> soundId
+    private val soundMap = HashMap<Int, Int>()
     private val buttonList = mutableListOf<Button>()
-    
-    // Position sélectionnée pour ajouter un son
     private var selectedButtonPosition: Int? = null
+    private lateinit var pageIndicator: TextView
     
-    // Launcher pour sélectionner un fichier audio
     private val selectAudioLauncher = registerForActivityResult(
-        ActivityResultContracts.GetContent()
+        ActivityResultContracts.OpenDocument()
     ) { uri: Uri? ->
         uri?.let { handleAudioSelection(it) }
     }
     
-    // Demande de permission
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
         if (isGranted) {
-            selectAudioLauncher.launch("audio/*")
+            selectAudioLauncher.launch(arrayOf("audio/*"))
         } else {
-            Toast.makeText(this, "Permission refusée", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Permission refusée", Toast.LENGTH_LONG).show()
         }
     }
     
@@ -57,22 +53,15 @@ class SoundboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_soundboard)
         
-        // Initialiser ViewModel
         viewModel = ViewModelProvider(this)[SoundboardViewModel::class.java]
+        pageIndicator = findViewById(R.id.tv_page_indicator)
         
-        // Initialiser SoundPool
         initializeSoundPool()
-        
-        // Initialiser les boutons
         initializeButtons()
-        
-        // Configurer la navigation
         setupNavigation()
-        
-        // Observer les changements de sons
         observeSounds()
+        observePageChanges()
         
-        // Bouton d'ajout
         findViewById<Button>(R.id.btn_add_sound).setOnClickListener {
             showAddSoundDialog()
         }
@@ -85,7 +74,6 @@ class SoundboardActivity : AppCompatActivity() {
     }
     
     private fun initializeButtons() {
-        // Récupérer tous les boutons de sons
         val buttonIds = listOf(
             R.id.btn_sound_1, R.id.btn_sound_2, R.id.btn_sound_3,
             R.id.btn_sound_4, R.id.btn_sound_5, R.id.btn_sound_6,
@@ -98,15 +86,12 @@ class SoundboardActivity : AppCompatActivity() {
         buttonIds.forEachIndexed { index, buttonId ->
             val button = findViewById<Button>(buttonId)
             buttonList.add(button)
-            
             val position = index + 1
             
-            // Clic normal : jouer le son
             button.setOnClickListener {
                 playSound(position)
             }
             
-            // Clic long : supprimer ou ajouter un son
             button.setOnLongClickListener {
                 handleLongClick(position, button)
                 true
@@ -117,12 +102,16 @@ class SoundboardActivity : AppCompatActivity() {
     private fun setupNavigation() {
         findViewById<ImageButton>(R.id.btn_previous_page).setOnClickListener {
             viewModel.previousPage()
-            Toast.makeText(this, "Page ${viewModel.currentPage + 1}", Toast.LENGTH_SHORT).show()
         }
         
         findViewById<ImageButton>(R.id.btn_next_page).setOnClickListener {
             viewModel.nextPage()
-            Toast.makeText(this, "Page ${viewModel.currentPage + 1}", Toast.LENGTH_SHORT).show()
+        }
+    }
+    
+    private fun observePageChanges() {
+        viewModel.currentPageLiveData.observe(this) { page ->
+            pageIndicator.text = "Page ${page + 1}"
         }
     }
     
@@ -137,12 +126,12 @@ class SoundboardActivity : AppCompatActivity() {
         buttonList.forEachIndexed { index, button ->
             button.text = ""
             button.contentDescription = getString(R.string.sound_button)
+            resetButtonColor(button, index + 1)
         }
         
-        // Vider le soundMap
         soundMap.clear()
         
-        // Charger les sons
+        // Charger les sons existants
         sounds.forEach { sound ->
             val buttonIndex = sound.buttonPosition - 1
             if (buttonIndex in buttonList.indices) {
@@ -150,29 +139,40 @@ class SoundboardActivity : AppCompatActivity() {
                 button.text = sound.name
                 button.contentDescription = sound.name
                 
-                // Changer la couleur du bouton
                 try {
                     button.setBackgroundColor(Color.parseColor(sound.buttonColor))
                 } catch (e: Exception) {
-                    // Garder la couleur par défaut si erreur
+                    // Garder la couleur par défaut
                 }
                 
-                // Charger le son dans SoundPool
                 loadSoundIntoPool(sound)
             }
         }
     }
     
+    private fun resetButtonColor(button: Button, position: Int) {
+        val defaultColors = listOf(
+            "#4ECDC4", "#95E1D3", "#F38181",
+            "#AA96DA", "#FCBAD3", "#FFFFD2"
+        )
+        val defaultColor = defaultColors[(position - 1) % defaultColors.size]
+        button.setBackgroundColor(Color.parseColor(defaultColor))
+    }
+    
     private fun loadSoundIntoPool(sound: Sound) {
         try {
-            val soundId = soundPool.load(sound.filePath, 1)
-            soundMap[sound.buttonPosition] = soundId
+            val uri = Uri.parse(sound.filePath)
+            val afd = contentResolver.openAssetFileDescriptor(uri, "r")
+            
+            if (afd != null) {
+                val soundId = soundPool.load(afd.fileDescriptor, afd.startOffset, afd.length, 1)
+                soundMap[sound.buttonPosition] = soundId
+                afd.close()
+            } else {
+                Toast.makeText(this, "Impossible de charger: ${sound.name}", Toast.LENGTH_SHORT).show()
+            }
         } catch (e: Exception) {
-            Toast.makeText(
-                this,
-                "Erreur de chargement: ${sound.name}",
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(this, "Erreur: ${sound.name} - ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -186,27 +186,39 @@ class SoundboardActivity : AppCompatActivity() {
     
     private fun handleLongClick(position: Int, button: Button) {
         CoroutineScope(Dispatchers.Main).launch {
-            val existingSound = viewModel.getSoundAtPosition(viewModel.currentPage, position)
+            val existingSound = withContext(Dispatchers.IO) {
+                viewModel.getSoundAtPosition(viewModel.currentPage, position)
+            }
             
             if (existingSound != null) {
-                // Son existe : proposer de supprimer
-                showDeleteConfirmation(existingSound, button)
+                showDeleteConfirmation(existingSound)
             } else {
-                // Pas de son : proposer d'ajouter
                 selectedButtonPosition = position
                 requestAudioFile()
             }
         }
     }
     
-    private fun showDeleteConfirmation(sound: Sound, button: Button) {
+    private fun showDeleteConfirmation(sound: Sound) {
         androidx.appcompat.app.AlertDialog.Builder(this)
-            .setTitle("Supprimer le son")
-            .setMessage("Voulez-vous supprimer \"${sound.name}\" ?")
+            .setTitle("Supprimer")
+            .setMessage("Supprimer \"${sound.name}\" ?")
             .setPositiveButton("Supprimer") { _, _ ->
+                // Révoquer la permission persistante
+                try {
+                    val uri = Uri.parse(sound.filePath)
+                    contentResolver.releasePersistableUriPermission(
+                        uri,
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    )
+                } catch (e: Exception) {
+                    // Ignorer si la permission n'existe pas
+                }
+                
+                // Supprimer le son de la base de données
                 viewModel.deleteSound(sound)
-                button.text = ""
-                Toast.makeText(this, "Son supprimé", Toast.LENGTH_SHORT).show()
+                
+                Toast.makeText(this, "Supprimé: ${sound.name}", Toast.LENGTH_SHORT).show()
             }
             .setNegativeButton("Annuler", null)
             .show()
@@ -218,7 +230,7 @@ class SoundboardActivity : AppCompatActivity() {
         }
         
         if (positions.isEmpty()) {
-            Toast.makeText(this, "Toutes les positions sont occupées", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Toutes les positions occupées", Toast.LENGTH_SHORT).show()
             return
         }
         
@@ -235,21 +247,61 @@ class SoundboardActivity : AppCompatActivity() {
     }
     
     private fun requestAudioFile() {
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            selectAudioLauncher.launch("audio/*")
+        val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Manifest.permission.READ_MEDIA_AUDIO
         } else {
-            requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        }
+        
+        if (ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED) {
+            selectAudioLauncher.launch(arrayOf("audio/*"))
+        } else {
+            requestPermissionLauncher.launch(permission)
         }
     }
     
     private fun handleAudioSelection(uri: Uri) {
         val position = selectedButtonPosition ?: return
+        val uriString = uri.toString()
         
-        // Demander le nom du son
+        // Vérifier si ce fichier existe déjà dans la base de données
+        CoroutineScope(Dispatchers.Main).launch {
+            val existingSound = withContext(Dispatchers.IO) {
+                viewModel.getSoundByFilePath(uriString)
+            }
+            
+            if (existingSound != null) {
+                // Fichier déjà utilisé
+                androidx.appcompat.app.AlertDialog.Builder(this@SoundboardActivity)
+                    .setTitle("Fichier déjà utilisé")
+                    .setMessage("Ce fichier sonore est déjà utilisé pour \"${existingSound.name}\" (Page ${existingSound.pageNumber + 1}, Position ${existingSound.buttonPosition}).\n\nVoulez-vous quand même l'ajouter ?")
+                    .setPositiveButton("Oui") { _, _ ->
+                        proceedWithAudioSelection(uri, position)
+                    }
+                    .setNegativeButton("Non") { _, _ ->
+                        selectedButtonPosition = null
+                    }
+                    .show()
+            } else {
+                // Fichier nouveau, continuer normalement
+                proceedWithAudioSelection(uri, position)
+            }
+        }
+    }
+    
+    private fun proceedWithAudioSelection(uri: Uri, position: Int) {
+        // Prendre une permission persistante sur l'URI
+        try {
+            contentResolver.takePersistableUriPermission(
+                uri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION
+            )
+        } catch (e: SecurityException) {
+            Toast.makeText(this, "Impossible d'obtenir l'accès permanent: ${e.message}", Toast.LENGTH_LONG).show()
+            selectedButtonPosition = null
+            return
+        }
+        
         val input = android.widget.EditText(this)
         input.hint = "Nom du son"
         
@@ -260,12 +312,13 @@ class SoundboardActivity : AppCompatActivity() {
                 val name = input.text.toString().ifEmpty { "Son $position" }
                 saveSound(name, uri.toString(), position)
             }
-            .setNegativeButton("Annuler", null)
+            .setNegativeButton("Annuler") { _, _ ->
+                selectedButtonPosition = null
+            }
             .show()
     }
     
     private fun saveSound(name: String, filePath: String, position: Int) {
-        // Couleurs alternées
         val colors = listOf(
             "#4ECDC4", "#95E1D3", "#F38181",
             "#AA96DA", "#FCBAD3", "#FFFFD2"
@@ -280,7 +333,7 @@ class SoundboardActivity : AppCompatActivity() {
             buttonColor = color
         )
         
-        Toast.makeText(this, "Son ajouté : $name", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Son ajouté: $name", Toast.LENGTH_SHORT).show()
         selectedButtonPosition = null
     }
     

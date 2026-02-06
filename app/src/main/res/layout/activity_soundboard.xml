@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:layout_marginTop="24dp"
         android:layout_marginBottom="16dp">
 
         <!-- Logo -->
@@ -21,7 +22,8 @@
             android:layout_height="48dp"
             android:src="@drawable/logo_app_kotlin"
             android:contentDescription="@string/logo_description"
-            android:scaleType="fitCenter"/>
+            android:scaleType="fitCenter"
+            android:tint="#05ab31"/>
 
         <Space
             android:layout_width="0dp"
@@ -375,8 +377,17 @@
             android:src="@android:drawable/ic_media_previous"
             android:background="@android:color/transparent"
             android:contentDescription="Page précédente"
-            android:layout_marginEnd="32dp"
             android:tint="#4ECDC4"/>
+
+        <TextView
+            android:id="@+id/tv_page_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Page 1"
+            android:textColor="#4ECDC4"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginHorizontal="24dp"/>
 
         <ImageButton
             android:id="@+id/btn_next_page"
@@ -385,7 +396,6 @@
             android:src="@android:drawable/ic_media_next"
             android:background="@android:color/transparent"
             android:contentDescription="Page suivante"
-            android:layout_marginStart="32dp"
             android:tint="#4ECDC4"/>
     </LinearLayout>
 
