@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Soundboard strings -->
+    <string name="add_sound">+ Ajouter</string>
+    <string name="logo_description">Logo de l\'application</string>
+    <string name="sound_button">Bouton de son</string>
+    <string name="sound_button_1">Bouton de son 1</string>
+    <string name="sound_button_2">Bouton de son 2</string>
+    <string name="sound_button_3">Bouton de son 3</string>
+    <string name="sound_button_4">Bouton de son 4</string>
+    <string name="sound_button_5">Bouton de son 5</string>
+    <string name="sound_button_6">Bouton de son 6</string>
+    <string name="sound_button_7">Bouton de son 7</string>
+    <string name="sound_button_8">Bouton de son 8</string>
+    <string name="sound_button_9">Bouton de son 9</string>
+    <string name="sound_button_10">Bouton de son 10</string>
+    <string name="sound_button_11">Bouton de son 11</string>
+    <string name="sound_button_12">Bouton de son 12</string>
+    <string name="sound_button_13">Bouton de son 13</string>
+    <string name="sound_button_14">Bouton de son 14</string>
+    <string name="sound_button_15">Bouton de son 15</string>
+    <string name="sound_button_16">Bouton de son 16</string>
+    <string name="sound_button_17">Bouton de son 17</string>
+    <string name="sound_button_18">Bouton de son 18</string>
+    <string name="previous_page">Page précédente</string>
+    <string name="next_page">Page suivante</string>
+</resources>
