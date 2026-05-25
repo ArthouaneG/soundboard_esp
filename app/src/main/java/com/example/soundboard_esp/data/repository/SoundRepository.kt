@@ -25,6 +25,10 @@ class SoundRepository(private val soundDao: SoundDao) {
     suspend fun getSoundByFilePath(filePath: String): Sound? {
         return soundDao.getSoundByFilePath(filePath)
     }
+    
+    fun getFavoriteSounds(): Flow<List<Sound>> {
+        return soundDao.getFavoriteSounds()
+    }
 
     suspend fun insertSound(sound: Sound): Long {
         return soundDao.insertSound(sound)

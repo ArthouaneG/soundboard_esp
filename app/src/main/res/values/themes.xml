@@ -1,5 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Soundboard_esp" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.Soundboard_esp" parent="Theme.AppCompat.NoActionBar">
+        <!-- Couleurs primaires -->
+        <item name="colorPrimary">#0D1117</item>
+        <item name="colorPrimaryDark">#0A0E14</item>
+        <item name="colorAccent">#00E5FF</item>
+        
+        <!-- Background -->
+        <item name="android:colorBackground">#0A0E14</item>
+        <item name="colorBackgroundFloating">#111827</item>
+        
+        <!-- Texte -->
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:textColorSecondary">#4B5563</item>
+        
+        <!-- Window background -->
+        <item name="android:windowBackground">#0A0E14</item>
+        
+        <!-- Dialog theme -->
+        <item name="alertDialogTheme">@style/CustomAlertDialog</item>
+        
+        <!-- Forcer tous les backgrounds à être sombres -->
+        <item name="android:windowIsFloating">false</item>
+    </style>
+    
+    <style name="CustomAlertDialog" parent="Theme.AppCompat.Dialog.Alert">
+        <!-- Background principal -->
+        <item name="android:windowBackground">#111827</item>
+        <item name="android:background">#111827</item>
+        <item name="colorBackgroundFloating">#111827</item>
+        
+        <!-- Panel background -->
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        
+        <!-- Texte du titre -->
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:windowTitleStyle">@style/DialogTitle</item>
+        
+        <!-- Texte du contenu -->
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColorSecondary">#4B5563</item>
+        
+        <!-- Liste items -->
+        <item name="android:listChoiceBackgroundIndicator">@drawable/dialog_item_background</item>
+        
+        <!-- Forcer tous les panels à être sombres -->
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        
+        <!-- Boutons -->
+        <item name="colorAccent">#00E5FF</item>
+        <item name="buttonBarButtonStyle">@style/CustomDialogButton</item>
+        <item name="buttonBarStyle">@style/DialogButtonBar</item>
+        
+        <!-- Message text appearance -->
+        <item name="android:textAppearanceMedium">@style/DialogMessage</item>
+        
+        <!-- Liste -->
+        <item name="android:listViewStyle">@style/DialogListView</item>
+    </style>
+    
+    <style name="DialogTitle" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:background">#111827</item>
+        <item name="android:padding">16dp</item>
+    </style>
+    
+    <style name="DialogMessage" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:background">#111827</item>
+    </style>
+    
+    <style name="CustomDialogButton" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:textColor">#00E5FF</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:background">@drawable/dialog_item_background</item>
+    </style>
+    
+    <style name="DialogButtonBar" parent="@android:style/ButtonBar">
+        <item name="android:background">#111827</item>
+        <item name="android:divider">@null</item>
+    </style>
+    
+    <style name="DialogListView" parent="@android:style/Widget.ListView">
+        <item name="android:background">#111827</item>
+        <item name="android:divider">@null</item>
+        <item name="android:listSelector">@drawable/dialog_item_background</item>
+    </style>
+
 </resources>

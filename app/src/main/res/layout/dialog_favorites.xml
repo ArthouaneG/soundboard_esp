@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/fav_dialog_bg"
+    android:paddingBottom="4dp">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical">
+
+        <!-- Star circle -->
+        <FrameLayout
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@drawable/fav_star_circle">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="&#9733;"
+                android:textColor="#00E5FF"
+                android:textSize="20sp"
+                android:gravity="center"/>
+        </FrameLayout>
+
+        <!-- Title block -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="COLLECTION"
+                android:textColor="#4B5563"
+                android:textSize="8sp"
+                android:fontFamily="monospace"
+                android:letterSpacing="0.2"/>
+
+            <TextView
+                android:id="@+id/tv_favorites_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mes Favoris"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <!-- Count badge -->
+        <TextView
+            android:id="@+id/tv_favorites_count"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:text="00"
+            android:textColor="#00E5FF"
+            android:textSize="11sp"
+            android:fontFamily="monospace"
+            android:textStyle="bold"
+            android:background="@drawable/fav_count_circle"
+            android:gravity="center"/>
+
+        <!-- Close button -->
+        <TextView
+            android:id="@+id/btn_close_dialog"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:text="&#215;"
+            android:textColor="#6B7280"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:background="@drawable/fav_close_circle"
+            android:layout_marginStart="8dp"
+            android:clickable="true"
+            android:focusable="true"/>
+    </LinearLayout>
+
+    <!-- Liste des favoris -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_favorites"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="12dp"
+        android:paddingBottom="4dp"
+        android:clipToPadding="false"/>
+
+    <!-- Message vide -->
+    <TextView
+        android:id="@+id/tv_empty_favorites"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Aucun son dans vos favoris"
+        android:textColor="#4B5563"
+        android:textSize="11sp"
+        android:fontFamily="monospace"
+        android:gravity="center"
+        android:padding="16dp"
+        android:visibility="gone"/>
+
+    <!-- Footer hint (always visible) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="12dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="APPUI LONG SUR UN PAD POUR AJOUTER"
+            android:textColor="#4B5563"
+            android:textSize="8sp"
+            android:fontFamily="monospace"
+            android:letterSpacing="0.1"/>
+
+        <View
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:background="@drawable/fav_dot"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -39,6 +39,10 @@ class SoundboardViewModel(application: Application) : AndroidViewModel(applicati
             _currentPage.value = current - 1
         }
     }
+    
+    fun goToPage(pageNumber: Int) {
+        _currentPage.value = pageNumber
+    }
 
     fun insertSound(
         name: String,
@@ -83,5 +87,14 @@ class SoundboardViewModel(application: Application) : AndroidViewModel(applicati
 
     fun getAllSounds(): LiveData<List<Sound>> {
         return repository.getAllSounds().asLiveData()
+    }
+    
+    fun getFavoriteSounds(): LiveData<List<Sound>> {
+        return repository.getFavoriteSounds().asLiveData()
+    }
+    
+    fun toggleFavorite(sound: Sound) = viewModelScope.launch {
+        val updatedSound = sound.copy(isFavorite = !sound.isFavorite)
+        repository.updateSound(updatedSound)
     }
 }

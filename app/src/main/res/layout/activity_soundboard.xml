@@ -3,44 +3,71 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="#1A1625">
+    android:paddingHorizontal="12dp"
+    android:paddingTop="0dp"
+    android:paddingBottom="8dp"
+    android:fitsSystemWindows="true"
+    android:background="@color/sonic_bg">
 
-    <!-- Header: Logo + Bouton Ajout -->
+    <!-- Header: Logo + Buttons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="16dp">
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="12dp">
 
         <!-- Logo -->
         <ImageView
-            android:id="@+id/iv_logo"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/logo_app_kotlin"
             android:contentDescription="@string/logo_description"
             android:scaleType="fitCenter"
-            android:tint="#05ab31"/>
+            android:tint="@color/sonic_cyan"
+            android:layout_weight="0"/>
 
-        <Space
+        <TextView
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="AUDIO SYSTEM"
+            android:textColor="@color/sonic_text_muted"
+            android:textSize="9sp"
+            android:fontFamily="monospace"
+            android:letterSpacing="0.15"
+            android:layout_marginStart="10dp"/>
 
-        <!-- Bouton Ajout (orange) -->
+        <!-- Bouton Favoris (outline) -->
+        <Button
+            android:id="@+id/btn_favorites"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="100dp"
+            android:layout_height="38dp"
+            android:text="FAVORIS"
+            android:background="@drawable/btn_header_outline"
+            android:textColor="@color/sonic_text_primary"
+            android:textSize="10sp"
+            android:fontFamily="monospace"
+            android:textAllCaps="false"
+            android:elevation="0dp"
+            android:layout_marginEnd="8dp"/>
+
+        <!-- Bouton Ajout (filled cyan) -->
         <Button
             android:id="@+id/btn_add_sound"
-            android:layout_width="120dp"
-            android:layout_height="56dp"
-            android:text="@string/add_sound"
-            android:backgroundTint="#FF6B35"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="100dp"
+            android:layout_height="38dp"
+            android:text="+ AJOUTER"
+            android:background="@drawable/btn_header_filled"
+            android:textColor="@color/sonic_bg"
+            android:textSize="10sp"
+            android:fontFamily="monospace"
+            android:textAllCaps="false"
             android:textStyle="bold"
-            android:elevation="4dp"/>
+            android:elevation="0dp"/>
     </LinearLayout>
 
     <!-- Grille de boutons de sons -->
@@ -56,50 +83,53 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="6dp">
 
             <Button
                 android:id="@+id/btn_sound_1"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginEnd="4dp"
-                android:backgroundTint="#4ECDC4"
+                android:background="@drawable/pad_background"
                 android:text=""
                 android:contentDescription="@string/sound_button_1"
-                android:textColor="#1A1625"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:elevation="3dp"
-                android:padding="4dp"/>
+                android:textColor="@color/sonic_text_primary"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:textAllCaps="false"
+                android:padding="6dp"/>
             <Button
                 android:id="@+id/btn_sound_2"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginHorizontal="4dp"
-                android:backgroundTint="#95E1D3"
+                android:background="@drawable/pad_background"
                 android:text=""
                 android:contentDescription="@string/sound_button_2"
-                android:textColor="#1A1625"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:elevation="3dp"
-                android:padding="4dp"/>
+                android:textColor="@color/sonic_text_primary"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:textAllCaps="false"
+                android:padding="6dp"/>
             <Button
                 android:id="@+id/btn_sound_3"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginStart="4dp"
-                android:backgroundTint="#F38181"
+                android:background="@drawable/pad_background"
                 android:text=""
                 android:contentDescription="@string/sound_button_3"
-                android:textColor="#1A1625"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:elevation="3dp"
-                android:padding="4dp"/>
+                android:textColor="@color/sonic_text_primary"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:textAllCaps="false"
+                android:padding="6dp"/>
         </LinearLayout>
 
         <!-- Rangée 2 -->
@@ -108,50 +138,53 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="6dp">
 
             <Button
                 android:id="@+id/btn_sound_4"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginEnd="4dp"
-                android:backgroundTint="#AA96DA"
+                android:background="@drawable/pad_background"
                 android:text=""
                 android:contentDescription="@string/sound_button_4"
-                android:textColor="#FFFFFF"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:elevation="3dp"
-                android:padding="4dp"/>
+                android:textColor="@color/sonic_text_primary"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:textAllCaps="false"
+                android:padding="6dp"/>
             <Button
                 android:id="@+id/btn_sound_5"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginHorizontal="4dp"
-                android:backgroundTint="#FCBAD3"
+                android:background="@drawable/pad_background"
                 android:text=""
                 android:contentDescription="@string/sound_button_5"
-                android:textColor="#1A1625"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:elevation="3dp"
-                android:padding="4dp"/>
+                android:textColor="@color/sonic_text_primary"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:textAllCaps="false"
+                android:padding="6dp"/>
             <Button
                 android:id="@+id/btn_sound_6"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginStart="4dp"
-                android:backgroundTint="#FFFFD2"
+                android:background="@drawable/pad_background"
                 android:text=""
                 android:contentDescription="@string/sound_button_6"
-                android:textColor="#1A1625"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:elevation="3dp"
-                android:padding="4dp"/>
+                android:textColor="@color/sonic_text_primary"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:textAllCaps="false"
+                android:padding="6dp"/>
         </LinearLayout>
 
         <!-- Rangée 3 -->
@@ -160,50 +193,53 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="6dp">
 
             <Button
                 android:id="@+id/btn_sound_7"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginEnd="4dp"
-                android:backgroundTint="#4ECDC4"
+                android:background="@drawable/pad_background"
                 android:text=""
                 android:contentDescription="@string/sound_button"
-                android:textColor="#1A1625"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:elevation="3dp"
-                android:padding="4dp"/>
+                android:textColor="@color/sonic_text_primary"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:textAllCaps="false"
+                android:padding="6dp"/>
             <Button
                 android:id="@+id/btn_sound_8"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginHorizontal="4dp"
-                android:backgroundTint="#95E1D3"
+                android:background="@drawable/pad_background"
                 android:text=""
                 android:contentDescription="@string/sound_button"
-                android:textColor="#1A1625"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:elevation="3dp"
-                android:padding="4dp"/>
+                android:textColor="@color/sonic_text_primary"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:textAllCaps="false"
+                android:padding="6dp"/>
             <Button
                 android:id="@+id/btn_sound_9"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginStart="4dp"
-                android:backgroundTint="#F38181"
+                android:background="@drawable/pad_background"
                 android:text=""
                 android:contentDescription="@string/sound_button"
-                android:textColor="#1A1625"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:elevation="3dp"
-                android:padding="4dp"/>
+                android:textColor="@color/sonic_text_primary"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:textAllCaps="false"
+                android:padding="6dp"/>
         </LinearLayout>
 
         <!-- Rangée 4 -->
@@ -212,50 +248,53 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="6dp">
 
             <Button
                 android:id="@+id/btn_sound_10"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginEnd="4dp"
-                android:backgroundTint="#AA96DA"
+                android:background="@drawable/pad_background"
                 android:text=""
                 android:contentDescription="@string/sound_button"
-                android:textColor="#FFFFFF"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:elevation="3dp"
-                android:padding="4dp"/>
+                android:textColor="@color/sonic_text_primary"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:textAllCaps="false"
+                android:padding="6dp"/>
             <Button
                 android:id="@+id/btn_sound_11"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginHorizontal="4dp"
-                android:backgroundTint="#FCBAD3"
+                android:background="@drawable/pad_background"
                 android:text=""
                 android:contentDescription="@string/sound_button"
-                android:textColor="#1A1625"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:elevation="3dp"
-                android:padding="4dp"/>
+                android:textColor="@color/sonic_text_primary"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:textAllCaps="false"
+                android:padding="6dp"/>
             <Button
                 android:id="@+id/btn_sound_12"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginStart="4dp"
-                android:backgroundTint="#FFFFD2"
+                android:background="@drawable/pad_background"
                 android:text=""
                 android:contentDescription="@string/sound_button"
-                android:textColor="#1A1625"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:elevation="3dp"
-                android:padding="4dp"/>
+                android:textColor="@color/sonic_text_primary"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:textAllCaps="false"
+                android:padding="6dp"/>
         </LinearLayout>
 
         <!-- Rangée 5 -->
@@ -264,50 +303,53 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="6dp">
 
             <Button
                 android:id="@+id/btn_sound_13"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginEnd="4dp"
-                android:backgroundTint="#4ECDC4"
+                android:background="@drawable/pad_background"
                 android:text=""
                 android:contentDescription="@string/sound_button"
-                android:textColor="#1A1625"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:elevation="3dp"
-                android:padding="4dp"/>
+                android:textColor="@color/sonic_text_primary"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:textAllCaps="false"
+                android:padding="6dp"/>
             <Button
                 android:id="@+id/btn_sound_14"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginHorizontal="4dp"
-                android:backgroundTint="#95E1D3"
+                android:background="@drawable/pad_background"
                 android:text=""
                 android:contentDescription="@string/sound_button"
-                android:textColor="#1A1625"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:elevation="3dp"
-                android:padding="4dp"/>
+                android:textColor="@color/sonic_text_primary"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:textAllCaps="false"
+                android:padding="6dp"/>
             <Button
                 android:id="@+id/btn_sound_15"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginStart="4dp"
-                android:backgroundTint="#F38181"
+                android:background="@drawable/pad_background"
                 android:text=""
                 android:contentDescription="@string/sound_button"
-                android:textColor="#1A1625"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:elevation="3dp"
-                android:padding="4dp"/>
+                android:textColor="@color/sonic_text_primary"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:textAllCaps="false"
+                android:padding="6dp"/>
         </LinearLayout>
 
         <!-- Rangée 6 -->
@@ -319,84 +361,107 @@
 
             <Button
                 android:id="@+id/btn_sound_16"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginEnd="4dp"
-                android:backgroundTint="#AA96DA"
+                android:background="@drawable/pad_background"
                 android:text=""
                 android:contentDescription="@string/sound_button"
-                android:textColor="#FFFFFF"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:elevation="3dp"
-                android:padding="4dp"/>
+                android:textColor="@color/sonic_text_primary"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:textAllCaps="false"
+                android:padding="6dp"/>
             <Button
                 android:id="@+id/btn_sound_17"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginHorizontal="4dp"
-                android:backgroundTint="#FCBAD3"
+                android:background="@drawable/pad_background"
                 android:text=""
                 android:contentDescription="@string/sound_button"
-                android:textColor="#1A1625"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:elevation="3dp"
-                android:padding="4dp"/>
+                android:textColor="@color/sonic_text_primary"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:textAllCaps="false"
+                android:padding="6dp"/>
             <Button
                 android:id="@+id/btn_sound_18"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginStart="4dp"
-                android:backgroundTint="#FFFFD2"
+                android:background="@drawable/pad_background"
                 android:text=""
                 android:contentDescription="@string/sound_button"
-                android:textColor="#1A1625"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:elevation="3dp"
-                android:padding="4dp"/>
+                android:textColor="@color/sonic_text_primary"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:textAllCaps="false"
+                android:padding="6dp"/>
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Navigation (flèches gauche/droite) -->
+    <!-- Navigation footer -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="68dp"
+        android:orientation="vertical"
+        android:background="@drawable/nav_footer_background"
         android:gravity="center"
-        android:layout_marginTop="16dp">
-
-        <ImageButton
-            android:id="@+id/btn_previous_page"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@android:drawable/ic_media_previous"
-            android:background="@android:color/transparent"
-            android:contentDescription="Page précédente"
-            android:tint="#4ECDC4"/>
+        android:layout_marginTop="8dp">
 
         <TextView
-            android:id="@+id/tv_page_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Page 1"
-            android:textColor="#4ECDC4"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginHorizontal="24dp"/>
+            android:text="NAVIGATION"
+            android:textColor="@color/sonic_text_muted"
+            android:textSize="8sp"
+            android:fontFamily="monospace"
+            android:letterSpacing="0.2"/>
 
-        <ImageButton
-            android:id="@+id/btn_next_page"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@android:drawable/ic_media_next"
-            android:background="@android:color/transparent"
-            android:contentDescription="Page suivante"
-            android:tint="#4ECDC4"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageButton
+                android:id="@+id/btn_previous_page"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@android:drawable/ic_media_previous"
+                android:background="@android:color/transparent"
+                android:contentDescription="Page précédente"
+                android:tint="@color/sonic_cyan"/>
+
+            <TextView
+                android:id="@+id/tv_page_indicator"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="PAGE 01"
+                android:textColor="@color/sonic_cyan"
+                android:textSize="14sp"
+                android:fontFamily="monospace"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:letterSpacing="0.1"/>
+
+            <ImageButton
+                android:id="@+id/btn_next_page"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@android:drawable/ic_media_next"
+                android:background="@android:color/transparent"
+                android:contentDescription="Page suivante"
+                android:tint="@color/sonic_cyan"/>
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

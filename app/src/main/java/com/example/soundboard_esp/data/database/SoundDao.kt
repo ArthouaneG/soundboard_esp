@@ -20,6 +20,9 @@ interface SoundDao {
     
     @Query("SELECT * FROM sounds WHERE filePath = :filePath LIMIT 1")
     suspend fun getSoundByFilePath(filePath: String): Sound?
+    
+    @Query("SELECT * FROM sounds WHERE isFavorite = 1 ORDER BY name")
+    fun getFavoriteSounds(): Flow<List<Sound>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSound(sound: Sound): Long

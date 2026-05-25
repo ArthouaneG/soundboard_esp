@@ -24,5 +24,8 @@ data class Sound(
     val pageNumber: Int = 0,
     
     /** Couleur du bouton en format hex (ex: "#4ECDC4") */
-    val buttonColor: String = "#4ECDC4"
+    val buttonColor: String = "#4ECDC4",
+    
+    /** Indique si le son est marqué comme favori */
+    val isFavorite: Boolean = false
 )
