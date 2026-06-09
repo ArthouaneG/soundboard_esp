@@ -1,6 +1,6 @@
 # 🎵 Audio System — Soundboard Android + Récepteur ESP32
 
-> Application Android de soundboard connectée sans fil à un récepteur audio ESP32 via Bluetooth A2DP, avec sortie numérique I2S vers un DAC stéréo UDA1334A.
+> Application Android de soundboard connectée sans fil à un récepteur audio ESP32 via Bluetooth A2DP, avec sortie numérique I2S vers un DAC stéréo UDA1334A by AdaFruit.
 
 ---
 
