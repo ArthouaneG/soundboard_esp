@@ -191,3 +191,4 @@ BDD Room  →  Flow<List<Sound>>  →  SoundRepository  →  ViewModel (asLiveDa
 | `READ_EXTERNAL_STORAGE` (API < 33) | Équivalent pour les versions Android plus anciennes |
 
 Les URIs des fichiers sont persistées via `ContentResolver.takePersistableUriPermission()` pour survivre aux redémarrages de l'appareil.
+
